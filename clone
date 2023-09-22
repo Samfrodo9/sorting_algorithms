@@ -1,0 +1,64 @@
+#include "sort.h"
+
+/**
+ * insertion_sort_list - An insertion sort list algorithm
+ * @list: Address of a pointer to a list pointer
+ *  
+*/
+
+void insertion_sort_list(listint_t **list)
+{
+
+	/**
+	 * typedef struct listint_s
+
+    const int n;
+    struct listint_s *prev;
+    struct listint_s *next;
+} listint_t;
+	*/
+
+	listint_t *transverse = *list;
+ 	listint_t *next_transverse;
+	next_transverse = transverse->next;  /*My key*/ 
+	listint_t *next_transverse2 = next_transverse;
+	listint_t *Clone = malloc(sizeof(listint_t));
+	int key;
+
+	if (Clone == NULL)
+		{
+			perror("Malloc allocation failed\n");
+			exit(EXIT_FAILURE);
+		}
+
+	if ((*list)->next == NULL)
+		return;
+
+	while (next_transverse != NULL)
+	{
+
+		key = next_transverse->n; /* Key */
+		transverse = next_transverse->prev; /* 'J' */
+
+		while ((transverse) && (transverse->n > key))
+		{
+			/* (transverse)->next->n = transverse->n; */
+			/* transverse->n = arr[j] */
+			/* (transverse->next->n)[j + 1] */
+			/* About to store addresses of unaffected Nodes (Nodes not being swapped)/*/
+			Clone->next = next_transverse->next; /*Storing the mem address here */
+			Clone->prev = transverse->prev; /*Storing the mem address here*/
+			transverse->prev = transverse->next;
+			transverse->next = next_transverse->next; /*/ Same as Clone->next /*/
+			next_transverse2->next = next_transverse->prev;
+			next_transverse2->prev = Clone->prev; /*Clone is useful here finally*/
+
+			transverse = transverse->prev ;/*loop till condition fails*/
+
+		}
+	next_transverse = next_transverse->next;
+	next_transverse2 = next_transverse;
+
+	}
+
+}

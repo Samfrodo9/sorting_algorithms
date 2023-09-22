@@ -3,56 +3,63 @@
 /**
  * insertion_sort_list - An insertion sort list algorithm
  * @list: Address of a pointer to a list pointer
-*/
-
+ */
 void insertion_sort_list(listint_t **list)
 {
+	listint_t *current, *prev_node, *next_node;
 
-	/**
-	 * ypedef struct listint_s
-
-    const int n;
-    struct listint_s *prev;
-    struct listint_s *next;
-} listint_t;
-	*/
-
-	listint_t *transverse = *list;
- 	listint_t *next_transverse = transverse->next; /*My key*/
-	listint_t *store = NULL; 
-	int key;
-
-	if ((*list)->next == NULL)
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	while (next_transverse != NULL)
+	current = (*list)->next;
+
+	while (current != NULL)
 	{
-		key = next_transverse->n; /*Key*/
-		transverse = next_transverse->prev; /*'J'*/
+		next_node = current->next;
+		prev_node = current->prev;
 
-		while ((transverse) && (transverse->n > key))
+		while (prev_node != NULL && prev_node->n > current->n)
 		{
-			/* (transverse)->next->n = transverse->n; */
-			/* transverse->n = arr[j] */
-			/* (transverse->next->n)[j + 1] */
-			store = transverse->next;
-			transverse->next =  transverse;/* Bigger value*/
-			transverse = store;
+			/* Swap current and prev_node */
+			if (prev_node->prev != NULL)
+				prev_node->prev->next = current;
+			else
+				*list = current;
 
-			transverse = transverse->prev ;/*loop till condition fails*/
+			if (current->next != NULL)
+				current->next->prev = prev_node;
+
+			prev_node->next = current->next;
+			current->prev = prev_node->prev;
+
+			current->next = prev_node;
+			prev_node->prev = current;
+
+			prev_node = current->prev;
+			print_list(*list);
 		}
+
+		current = next_node;
 	}
-	next_transverse = next_transverse->next;
-
 }
+
 /**
-void swap(listint_t **a)
-{
-	listint_t *b = (*a)->next;
-	listint_t *a_next, *a_prev, *b_next, *b_prev;
-
-	a_prev = (*a)->prev;
-	(*a)->prev = b;
-	(*a)->next = b->next
-}
+ * Algorithm - Here is the algorithm
+ * Check if the input list is empty or has only one element.
+ * If so, return because it's already sorted.
+ * This is because the first element is considered sorted initially.
+ * Initialize a current pointer to the second element in the list.
+ * Enter a loop that iterates until current becomes null:
+ * a. Inside the loop, initialize a next_node pointer
+ * to current.next and a prev_node pointer to current.prev.
+ * b. Enter another loop that iterates while prev_node is not null
+ * and prev_node.n is greater than current.n:
+ * i. Swap current and prev_node to correctly insert current
+ * into the sorted part of the list.
+ * ii. Update the next and prev pointers of the nodes involved in the swap.
+ * iii. Move prev_node to the previous node for the next iteration.
+ * c. After the inner loop completes, move current to the
+ * next node (next_node) for the next iteration.
+ * The outer loop continues until current becomes null,
+ * and the list becomes sorted.
 */
