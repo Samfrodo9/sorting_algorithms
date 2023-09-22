@@ -7,6 +7,7 @@
 
 void insertion_sort_list(listint_t **list)
 {
+
 	/**
 	 * ypedef struct listint_s
 
@@ -16,18 +17,13 @@ void insertion_sort_list(listint_t **list)
 } listint_t;
 	*/
 
-	if ((!list) || !(*list))
-	{
-		return;
-	}
+	listint_t *transverse = *list;
+ 	listint_t *next_transverse = transverse->next; /*My key*/
+	listint_t *store = NULL; 
+	int key;
 
 	if ((*list)->next == NULL)
 		return;
-
-	listint_t *transverse = (*list); /*Sorted List*/
-	listint_t *next_transverse = transverse->next; /*My key*/
-	listint_t *store = NULL; 
-	int key;
 
 	while (next_transverse != NULL)
 	{
@@ -38,15 +34,25 @@ void insertion_sort_list(listint_t **list)
 		{
 			/* (transverse)->next->n = transverse->n; */
 			/* transverse->n = arr[j] */
-			/* (transverse->next->n)[j + 1] */ 
+			/* (transverse->next->n)[j + 1] */
 			store = transverse->next;
-			transverse->next = transverse /* Bigger value*/
+			transverse->next =  transverse;/* Bigger value*/
+			transverse = store;
 
-
-
+			transverse = transverse->prev ;/*loop till condition fails*/
 		}
-
-		next_transverse = next_transverse->next;
 	}
+	next_transverse = next_transverse->next;
 
 }
+/**
+void swap(listint_t **a)
+{
+	listint_t *b = (*a)->next;
+	listint_t *a_next, *a_prev, *b_next, *b_prev;
+
+	a_prev = (*a)->prev;
+	(*a)->prev = b;
+	(*a)->next = b->next
+}
+*/
