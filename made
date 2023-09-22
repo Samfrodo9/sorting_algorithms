@@ -1,0 +1,73 @@
+#include "sort.h"
+
+/**
+ * quick_sort - A function that sorts with quick sort
+ * @array: pointer array to sort
+ * @size: size of the array
+ */
+
+/*Lomuto partitioning scheme is used*/
+
+void quick_sort(int *array, size_t size)
+{
+	if (array == NULL || size < 2)
+		return;
+
+	quicksort_recursive(array, 0, size - 1, size);
+}
+
+int partition(int *array, int upperbound, int lowerbound)
+{
+
+	int pivot = array[upperbound];
+	int i, j, partitioned;
+
+	i = lowerbound - 1;
+	j = lowerbound;
+
+	for (j = lowerbound; j < (upperbound - 1); j++)
+	{
+		if (array[j] < pivot)
+		{
+			i++;
+			swap(&array[i], &array[j]);
+		}
+	}
+	swap(&array[i + 1], &array[upperbound]);
+	partitioned = i + 1;
+	return (partitioned);
+}
+
+/**
+ * quicksort_recursive - A recursive function to perform Quick Sort
+ * @array: Pointer to the array
+ * @low: Starting index of the subarray
+ * @high: Ending index of the subarray
+ */
+void quicksort_recursive(int *array, int low, int high, size_t size)
+{
+	int partition_index;
+
+	if (low < high)
+	{
+		partition_index = partition(array, low, high);
+
+		quicksort_recursive(array, low, partition_index - 1, size);
+		quicksort_recursive(array, partition_index + 1, high, size);
+		print_array(array, size);
+	}
+}
+
+
+
+/**
+ * swap - Swaps two integers
+ * @a: Pointer to the first integer
+ * @b: Pointer to the second integer
+ */
+void swap(int *a, int *b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
