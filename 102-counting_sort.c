@@ -10,7 +10,8 @@
 void counting_sort(int *array, size_t size)
 {
 	size_t k;
-	int *count, i, max, j, *array_;
+	int *count, i, max, j;
+	int *array_;
 
 	if (array && size > 1)
 	{
@@ -42,10 +43,14 @@ void counting_sort(int *array, size_t size)
 			{
 				array_[--count[array[j]]] = array[j];
 			}
-			for (j = size - 1; j >= 0; j--)
-				array[j] = array_[j];
-			free(count);
-			free(array_);
+			array = array_;
+
+			/**
+			*for (j = size - 1; j >= 0; j--)
+			*	array[j] = array_[j];
+			*free(count);
+			*free(array);
+			*/
 		}
 	}
 }
