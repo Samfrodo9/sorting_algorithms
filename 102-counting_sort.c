@@ -43,14 +43,11 @@ void counting_sort(int *array, size_t size)
 			{
 				array_[--count[array[j]]] = array[j];
 			}
-			array = array_;
 
-			/**
-			*for (j = size - 1; j >= 0; j--)
-			*	array[j] = array_[j];
-			*free(count);
-			*free(array);
-			*/
+			for (j = size - 1; j >= 0; j--)
+				array[j] = array_[j];
+			free(count);
+			free(array_);
 		}
 	}
 }
